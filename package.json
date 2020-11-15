@@ -1,14 +1,24 @@
 {
-  "name": "compass",
-  "version": "0.1.0",
-  "description": "Magnetic Creative's frontend JS framework for building beautiful & fast websties.",
-  "main": "main.js",
+  "name": "website-toolbox",
+  "version": "0.1.1",
+  "description": "A box full of great tools for regular websites.",
+  "main": "src/main.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "jest",
-    "build": "rollup --config"
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dougalcantara/website-toolbox.git"
   },
   "author": "Doug Alcantara",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dougalcantara/website-toolbox/issues"
+  },
+  "homepage": "https://github.com/dougalcantara/website-toolbox#readme",
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
