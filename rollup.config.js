@@ -1,22 +1,15 @@
 import babel from '@rollup/plugin-babel';
+import { uglify } from 'rollup-plugin-uglify';
 
-export default [
-  {
-    input: 'src/main.js',
-    output: {
-      file: 'build/index.js',
-      name: 'compass',
-      format: 'es',
-    },
-    plugins: [babel({ babelHelpers: 'bundled' })],
+export default {
+  input: 'src/main.js',
+  output: {
+    file: 'build/website-toolbox.js',
+    name: 'website-toolbox',
+    format: 'umd',
   },
-  {
-    input: 'test/index.js',
-    output: {
-      file: 'build/test.js',
-      name: 'test',
-      format: 'umd',
-    },
-    plugins: [babel({ babelHelpers: 'bundled' })],
-  },
-];
+  plugins: [
+    babel({ babelHelpers: 'bundled', presets: ['@babel/preset-env'] }),
+    uglify(),
+  ],
+};

@@ -1,13 +1,14 @@
 {
   "name": "website-toolbox",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A box full of great tools for regular websites.",
-  "main": "src/main.js",
+  "main": "build/website-toolbox.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "rollup --config"
   },
   "repository": {
     "type": "git",
@@ -19,12 +20,14 @@
     "url": "https://github.com/dougalcantara/website-toolbox/issues"
   },
   "homepage": "https://github.com/dougalcantara/website-toolbox#readme",
+  "browserslist": "> 0.25%, not dead",
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@rollup/plugin-babel": "^5.2.1",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
-    "rollup": "^2.33.1"
+    "rollup": "^2.33.1",
+    "rollup-plugin-uglify": "^6.0.4"
   }
 }
