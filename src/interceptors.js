@@ -11,7 +11,7 @@ export default {
 
       return target[key];
     },
-    set(target, key) {
+    set(target, key, value) {
       const handler = target[key];
 
       if (!handler) {
@@ -23,7 +23,7 @@ export default {
       const didCall = Reflect.set(...arguments);
 
       if (typeof component.hooks.updated === 'function') {
-        component.hooks.updated.apply(component, [target]);
+        component.hooks.updated.apply(component, [value, handler, key]);
       }
 
       return didCall;

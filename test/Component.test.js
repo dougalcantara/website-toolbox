@@ -34,12 +34,13 @@ const component = new Component({
       // The component is available as `this`, similar to VueJS
       this.methods.attachEventListeners();
     },
-    updated(data) {},
+    updated(newVal, previousVal, prop) {},
   },
   methods: {
     attachEventListeners() {
       const submitButton = this.nodes.buttons[0];
 
+      // TODO: Provide .on('click', () => {}) and other helpers
       submitButton.addEventListener('click', this.methods.handleSubmit);
     },
     handleSubmit(e) {
@@ -116,5 +117,9 @@ test('Component.lifecycle', () => {
   // check that hooks.updated was called
   expect(updated).toHaveBeenCalledTimes(1);
   // check that hooks.updated was called & was passed the updated piece of data
-  expect(updated).toHaveBeenCalledWith({ message: 'Episode IV: A New Hope' });
+  expect(updated).toHaveBeenCalledWith(
+    'Episode IV: A New Hope', // the new value
+    'Goodbye cruel world!', // the previous value
+    'message' // the data.key that was updated
+  );
 });

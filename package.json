@@ -1,7 +1,7 @@
 {
   "name": "website-toolbox",
   "version": "0.2.1",
-  "description": "A box full of great tools for regular websites.",
+  "description": "A dead-simple framework for dealing with all sorts of \"website things\".",
   "main": "build/website-toolbox.js",
   "directories": {
     "test": "test"
