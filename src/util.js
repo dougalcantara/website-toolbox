@@ -4,10 +4,9 @@ export function queryNodes(rootEl, rawNodes) {
   Object.keys(rawNodes).forEach((key) => {
     const selector = rawNodes[key];
     const isArr = Array.isArray(selector);
-    const isStr = typeof selector === 'string';
     const query = isArr ? 'querySelectorAll' : 'querySelector';
 
-    if (!isArr && !isStr) {
+    if (!isArr && typeof selector !== 'string') {
       ctx[key] = null;
       return;
     }

@@ -1,34 +1,29 @@
 import { queryNodes } from './util';
-import { dataInterceptor, methodsInterceptor } from './interceptors';
+import interceptors from './interceptors';
 
 export default function Component(component) {
-  this.root = document.querySelector(component.root);
-  this.nodes = queryNodes(this.root, component.nodes);
-  this.data = new Proxy(component.data, dataInterceptor(component));
-
-  let _component = {
-    ...component,
-    root: this.root,
-    nodes: this.nodes,
-    data: this.data,
-  };
-
   /**
-   * `Component.methods` shouldn't be proxied until `Component.data` has been proxied first.
-   *
-   * Beneficial because we can pass the enhanced `_component` to methods as `this` when
-   * they're called from inside the `Component`.
-   * */
-  this.methods = new Proxy(component.methods, methodsInterceptor(_component));
+   * Copy over the component to `this` -- we want to keep the Function
+   * prototype intact here so `this = component` would be a bad idea.
+   */
+  Object.keys(component).forEach((key) => (this[key] = component[key]));
 
-  _component = {
-    ..._component,
-    methods: this.methods,
-  };
-
-  if (typeof component.setup === 'function') {
-    component.setup.apply(_component);
+  if (component.root) {
+    // TODO: validate
+    this.root = document.querySelector(this.root);
   }
 
-  return _component;
+  this.nodes = queryNodes(this.root, this.nodes);
+
+  this.data = new Proxy(this.data, interceptors.data(this));
+
+  this.methods = new Proxy(this.methods, interceptors.methods(this));
+
+  if (typeof this.hooks.setup === 'function') {
+    this.hooks.setup.apply(this);
+  }
+
+  this._reset = () => {}; // TODO: reset to initialState
+
+  return () => this;
 }

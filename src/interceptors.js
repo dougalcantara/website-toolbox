@@ -1,36 +1,43 @@
-export const dataInterceptor = (component) => ({
-  get(target, key) {
-    const handler = target[key];
+export default {
+  data: (component) => ({
+    get(target, key) {
+      const handler = target[key];
 
-    if (!handler) {
-      throw new Error(
-        `[COMPASS]: property ${key} does not exist on Component.data`
-      );
-    }
+      if (!handler) {
+        throw new Error(
+          `[website-toolbox]: property ${key} does not exist on Component.data`
+        );
+      }
 
-    return target[key];
-  },
-  set(target, key) {
-    const handler = target[key];
+      return target[key];
+    },
+    set(target, key) {
+      const handler = target[key];
 
-    if (!handler) {
-      throw new Error(
-        '[COMPASS]: Cannot assign a value to an undeclared data property'
-      );
-    }
+      if (!handler) {
+        throw new Error(
+          '[website-toolbox]: Cannot assign a value to an undeclared data property'
+        );
+      }
 
-    return Reflect.set(...arguments);
-  },
-});
+      const didCall = Reflect.set(...arguments);
 
-export const methodsInterceptor = (component) => ({
-  get(target, key) {
-    const handler = target[key];
+      if (typeof component.hooks.updated === 'function') {
+        component.hooks.updated.apply(component, [target]);
+      }
 
-    return function (...args) {
-      const result = handler.apply(component, args);
+      return didCall;
+    },
+  }),
+  methods: (component) => ({
+    get(target, key) {
+      const handler = target[key];
 
-      return result;
-    };
-  },
-});
+      return function (...args) {
+        const result = handler.apply(component, args);
+
+        return result;
+      };
+    },
+  }),
+};
