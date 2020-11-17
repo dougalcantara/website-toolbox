@@ -4,7 +4,7 @@ import interceptors from './interceptors';
 export default function Component(component) {
   /**
    * Copy over the component to `this` -- we want to keep the Function
-   * prototype intact here so `this = component` would be a bad idea.
+   * prototype intact.
    */
   Object.keys(component).forEach((key) => (this[key] = component[key]));
 
@@ -13,10 +13,11 @@ export default function Component(component) {
     this.root = document.querySelector(this.root);
   }
 
-  this.nodes = queryNodes(this.root, this.nodes);
-
+  this.nodes = new Proxy(
+    queryNodes(this.root, this.nodes),
+    interceptors.nodes(this)
+  );
   this.data = new Proxy(this.data, interceptors.data(this));
-
   this.methods = new Proxy(this.methods, interceptors.methods(this));
 
   if (typeof this.hooks.setup === 'function') {

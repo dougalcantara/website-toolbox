@@ -87,5 +87,5 @@ npm run test // test: jest
 
 ## Building
 ```
-npm run build // build: rollup --config
+npm run build // build: npm run test && rollup --config
 ```

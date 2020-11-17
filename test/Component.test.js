@@ -18,13 +18,6 @@ const component = new Component({
     headline: '.headline', // querySelector
     buttons: ['.button'], // querySelectorAll
     elementNotInScope: '.unrelated-component', // will be `null`, since you can't query outside of the root element
-    // will be null
-    moreBadInput: 42,
-    // also null
-    badInput: {
-      foo: 'bar',
-      baz: 'qux',
-    },
   },
   data: {
     message: 'Hello world!',
@@ -75,8 +68,6 @@ test('Component.nodes', () => {
   expect(nodes.buttons.toString()).toEqual('[object NodeList]');
   // can't query for elements outside of root
   expect(nodes.elementNotInScope).toBeNull();
-  // bad config
-  expect(nodes.badInput).toBeNull();
 });
 
 test('Component.data', () => {

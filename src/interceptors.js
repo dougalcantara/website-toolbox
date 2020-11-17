@@ -1,4 +1,27 @@
 export default {
+  nodes: (component) => ({
+    get(target, key) {
+      return target[key];
+    },
+    set(target, key, nextVal) {
+      const prevVal = target[key];
+
+      if (!prevVal) {
+        throw new Error(
+          `[website-toolbox]: Nodes must be declared before they are assigned a value${
+            component.name && ` in ${component.name}`
+          }`
+        );
+      }
+
+      if (typeof component.hooks.updated === 'function') {
+        component.hooks.updated.apply(component, [nextVal, prevVal, key]);
+      }
+
+      return Reflect.set(...arguments);
+    },
+  }),
+
   data: (component) => ({
     get(target, key) {
       const existingVal = target[key];
@@ -31,6 +54,7 @@ export default {
       return Reflect.set(...arguments);
     },
   }),
+
   methods: (component) => ({
     get(target, key) {
       const handler = target[key];
