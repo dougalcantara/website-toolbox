@@ -8,16 +8,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:badges": "npm run test && jest-coverage-badges",
-    "build": "npm run test:badges && rollup --config"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "coverageReporters": [
-      "json-summary", 
-      "text",
-      "lcov"
-    ]
+    "build": "npm run test && rollup --config"
   },
   "repository": {
     "type": "git",
