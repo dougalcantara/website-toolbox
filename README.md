@@ -59,9 +59,9 @@ const carousel = new Component({
     },
 
     // Called immediately after anything in `Component.data` is updated 
-    updated(newVal, oldVal, key) {
+    updated(next, prev, key) {
       /**
-       * `newVal` & `oldVal` are the current & previous values of the
+       * `next` & `prev` are the upcoming & previous values of the
        * updated data prop, respectively
        * 
        * `key` is the keyname of the property that updated, so you can do 

@@ -1,32 +1,34 @@
 export default {
   data: (component) => ({
     get(target, key) {
-      const handler = target[key];
+      const existingVal = target[key];
 
-      if (!handler) {
+      if (!existingVal) {
         throw new Error(
-          `[website-toolbox]: property ${key} does not exist on Component.data`
+          `[website-toolbox]: property ${key} does not exist on ${
+            component.name || 'Component'
+          }.data`
         );
       }
 
       return target[key];
     },
-    set(target, key, value) {
-      const handler = target[key];
+    set(target, key, nextVal) {
+      const prevVal = target[key];
 
-      if (!handler) {
+      if (!prevVal) {
         throw new Error(
-          '[website-toolbox]: Cannot assign a value to an undeclared data property'
+          `[website-toolbox]: Cannot assign a value to an undeclared property${
+            component.name && ` in ${component.name}.data`
+          }`
         );
       }
 
-      const didCall = Reflect.set(...arguments);
-
       if (typeof component.hooks.updated === 'function') {
-        component.hooks.updated.apply(component, [value, handler, key]);
+        component.hooks.updated.apply(component, [nextVal, prevVal, key]);
       }
 
-      return didCall;
+      return Reflect.set(...arguments);
     },
   }),
   methods: (component) => ({

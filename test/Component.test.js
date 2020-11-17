@@ -34,7 +34,7 @@ const component = new Component({
       // The component is available as `this`, similar to VueJS
       this.methods.attachEventListeners();
     },
-    updated(newVal, previousVal, prop) {},
+    updated(next, prev, prop) {},
   },
   methods: {
     attachEventListeners() {
@@ -92,7 +92,7 @@ test('Component.data', () => {
     data.skunk;
   } catch ({ message }) {
     expect(message).toEqual(
-      '[website-toolbox]: property skunk does not exist on Component.data'
+      '[website-toolbox]: property skunk does not exist on TestComponent.data'
     );
   }
 
@@ -101,7 +101,7 @@ test('Component.data', () => {
     methods.assignUndeclaredData('skunk', 'stinky');
   } catch ({ message }) {
     expect(message).toEqual(
-      '[website-toolbox]: Cannot assign a value to an undeclared data property'
+      '[website-toolbox]: Cannot assign a value to an undeclared property in TestComponent.data'
     );
   }
 });
@@ -118,7 +118,7 @@ test('Component.lifecycle', () => {
   expect(updated).toHaveBeenCalledTimes(1);
   // check that hooks.updated was called & was passed the updated piece of data
   expect(updated).toHaveBeenCalledWith(
-    'Episode IV: A New Hope', // the new value
+    'Episode IV: A New Hope', // the next value
     'Goodbye cruel world!', // the previous value
     'message' // the data.key that was updated
   );
