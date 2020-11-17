@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1605600308436" clover="3.2.0">
+  <project timestamp="1605600308437" name="All files">
+    <metrics statements="48" coveredstatements="48" conditionals="32" coveredconditionals="27" methods="15" coveredmethods="14" elements="95" coveredelements="89" complexity="0" loc="48" ncloc="48" packages="1" files="3" classes="3"/>
+    <file name="interceptors.js" path="/Users/dougalcantara/dev/website-toolbox/src/interceptors.js">
+      <metrics statements="24" coveredstatements="24" conditionals="18" coveredconditionals="15" methods="9" coveredmethods="9"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="4" count="5" type="stmt"/>
+      <line num="7" count="2" type="stmt"/>
+      <line num="9" count="2" type="cond" truecount="4" falsecount="0"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="17" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
+      <line num="25" count="1" type="stmt"/>
+      <line num="27" count="4" type="stmt"/>
+      <line num="29" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="30" count="1" type="stmt"/>
+      <line num="37" count="3" type="stmt"/>
+      <line num="40" count="3" type="stmt"/>
+      <line num="42" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="43" count="1" type="stmt"/>
+      <line num="50" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="51" count="2" type="stmt"/>
+      <line num="54" count="2" type="stmt"/>
+      <line num="58" count="1" type="stmt"/>
+      <line num="60" count="5" type="stmt"/>
+      <line num="62" count="5" type="stmt"/>
+      <line num="63" count="4" type="stmt"/>
+      <line num="65" count="3" type="stmt"/>
+    </file>
+    <file name="main.js" path="/Users/dougalcantara/dev/website-toolbox/src/main.js">
+      <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="3"/>
+      <line num="9" count="6" type="stmt"/>
+      <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
+      <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+      <line num="29" count="1" type="stmt"/>
+    </file>
+    <file name="util.js" path="/Users/dougalcantara/dev/website-toolbox/src/util.js">
+      <metrics statements="14" coveredstatements="14" conditionals="10" coveredconditionals="10" methods="2" coveredmethods="2"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="5" count="5" type="stmt"/>
+      <line num="6" count="5" type="stmt"/>
+      <line num="7" count="5" type="stmt"/>
+      <line num="8" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="10" count="5" type="cond" truecount="4" falsecount="0"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="13" count="4" type="cond" truecount="4" falsecount="0"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="19" count="3" type="stmt"/>
+      <line num="22" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

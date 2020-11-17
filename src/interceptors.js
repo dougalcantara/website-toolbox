@@ -6,10 +6,10 @@ export default {
     set(target, key, nextVal) {
       const prevVal = target[key];
 
-      if (!prevVal) {
+      if (!prevVal && typeof prevVal !== 'string') {
         throw new Error(
           `[website-toolbox]: Nodes must be declared before they are assigned a value${
-            component.name && ` in ${component.name}`
+            component.name && ` in ${component.name}.nodes`
           }`
         );
       }

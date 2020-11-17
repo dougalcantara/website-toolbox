@@ -6,6 +6,7 @@ document.body.innerHTML = /*html*/ `
   </div>
   <div class="test-component">
     <h1 class="headline">Headline</h1>
+    <p>A little bit of text</p>
     <button class="button" type="submit">Submit</button>
     <button class="button" type="reset">Cancel</button>
   </div>
@@ -18,6 +19,10 @@ const component = new Component({
     headline: '.headline', // querySelector
     buttons: ['.button'], // querySelectorAll
     elementNotInScope: '.unrelated-component', // will be `null`, since you can't query outside of the root element
+    willBeQueriedLater: '', // allow for dynamic DOM entries & similar stuff to get queried later
+    badInput: {
+      foo: 'bar',
+    },
   },
   data: {
     message: 'Hello world!',
@@ -61,13 +66,26 @@ test('Component.root', () => {
 });
 
 test('Component.nodes', () => {
-  const { nodes } = testComponent;
+  const { root, nodes } = testComponent;
   // querySelector
   expect(nodes.headline.toString()).toEqual('[object HTMLHeadingElement]');
   // querySelectorAll
   expect(nodes.buttons.toString()).toEqual('[object NodeList]');
   // can't query for elements outside of root
   expect(nodes.elementNotInScope).toBeNull();
+
+  // allow for nodes to be initialized as '', hinting that they'll be queried later
+  nodes.willBeQueriedLater = root.querySelector('p');
+  try {
+    nodes.nope = document.querySelector('.some-thing');
+  } catch ({ message }) {
+    expect(message).toEqual(
+      '[website-toolbox]: Nodes must be declared before they are assigned a value in TestComponent.nodes'
+    );
+  }
+
+  // quietly reject shapes that don't fit the restriction of '' or []
+  expect(nodes.badInput).toBeNull();
 });
 
 test('Component.data', () => {
