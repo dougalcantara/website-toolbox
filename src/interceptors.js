@@ -1,5 +1,5 @@
-export default {
-  nodes: (component) => ({
+function nodes(component) {
+  const interceptor = {
     get(target, key) {
       return target[key];
     },
@@ -20,9 +20,13 @@ export default {
 
       return Reflect.set(...arguments);
     },
-  }),
+  };
 
-  data: (component) => ({
+  return interceptor;
+}
+
+function data(component) {
+  const interceptor = {
     get(target, key) {
       const existingVal = target[key];
 
@@ -53,9 +57,13 @@ export default {
 
       return Reflect.set(...arguments);
     },
-  }),
+  };
 
-  methods: (component) => ({
+  return interceptor;
+}
+
+function methods(component) {
+  const interceptor = {
     get(target, key) {
       const handler = target[key];
 
@@ -65,5 +73,13 @@ export default {
         return result;
       };
     },
-  }),
+  };
+
+  return interceptor;
+}
+
+export default {
+  nodes,
+  data,
+  methods,
 };

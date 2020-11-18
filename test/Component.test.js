@@ -1,72 +1,18 @@
-import Component from '../src/main';
+import testComponent from './fixtures/testComponent';
+import testContainer from './fixtures/testContainer';
+import './fixtures/_document';
 
-document.body.innerHTML = /*html*/ `
-  <div class="unrelated-component">
-    <p>Something distracting</p>
-  </div>
-  <div class="test-component">
-    <h1 class="headline">Headline</h1>
-    <p>A little bit of text</p>
-    <button class="button" type="submit">Submit</button>
-    <button class="button" type="reset">Cancel</button>
-  </div>
-`;
-
-const component = new Component({
-  name: 'TestComponent',
-  root: '.test-component',
-  nodes: {
-    headline: '.headline', // querySelector
-    buttons: ['.button'], // querySelectorAll
-    elementNotInScope: '.unrelated-component', // will be `null`, since you can't query outside of the root element
-    willBeQueriedLater: '', // allow for dynamic DOM entries & similar stuff to get queried later
-    badInput: {
-      foo: 'bar',
-    },
-  },
-  data: {
-    message: 'Hello world!',
-  },
-  hooks: {
-    setup() {
-      // The component is available as `this`, similar to VueJS
-      this.methods.attachEventListeners();
-    },
-    updated(next, prev, prop) {},
-  },
-  methods: {
-    attachEventListeners() {
-      const submitButton = this.nodes.buttons[0];
-
-      // TODO: Provide .on('click', () => {}) and other helpers
-      submitButton.addEventListener('click', this.methods.handleSubmit);
-    },
-    handleSubmit(e) {
-      // handle a click, form submission, resize, etc
-    },
-    // can assign data from inside methods
-    updateMessage(newMsg) {
-      this.data.message = newMsg;
-    },
-    // can't update something that hasn't been declared
-    assignUndeclaredData(prop, val) {
-      // TypeError: 'set' on proxy: trap returned falsish for property ${prop}
-      this.data[prop] = val;
-    },
-  },
-});
-
-const testComponent = component();
+const component = testComponent(testContainer);
 const newMessage = 'Goodbye cruel world!';
 
 test('Component.root', () => {
-  const { root } = testComponent;
+  const { root } = component;
 
   expect(root.toString()).toEqual('[object HTMLDivElement]');
 });
 
 test('Component.nodes', () => {
-  const { root, nodes } = testComponent;
+  const { root, nodes } = component;
   // querySelector
   expect(nodes.headline.toString()).toEqual('[object HTMLHeadingElement]');
   // querySelectorAll
@@ -89,7 +35,7 @@ test('Component.nodes', () => {
 });
 
 test('Component.data', () => {
-  const { data, methods } = testComponent;
+  const { data, methods } = component;
 
   // make sure assignment works as expected for typical usage
   expect(data.message).toEqual('Hello world!');
@@ -116,7 +62,7 @@ test('Component.data', () => {
 });
 
 test('Component.lifecycle', () => {
-  const { hooks, methods, data } = testComponent;
+  const { hooks, methods, data } = component;
   const updated = jest.spyOn(hooks, 'updated');
 
   // double check current state
