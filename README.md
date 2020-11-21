@@ -17,11 +17,12 @@ That's not to say this framework is primitive -- it still has cool stuff like:
 - Reactive data properties
 - Lifecycle hooks
 - Reference to the parent scope/context using the `this` keyword (similar to the way `this` is handled in VueJS)
+- Global reactive state (and `this.setState`!)
 - Cross-component communication (in development)
 - Custom plugin & mixin integration (in development)
 - Helpful methods like `resize()`, `updated()` and `inView()` (in development)
 
-But it doesn't do client-side routing, it probably won't be used for complex state management, and it doesn't have a virtual DOM. *But you don't always need that stuff*. 
+The Website Toolbox doesn't replace React, Vue, or Angular. Those provide helpful and practical tools & opinions about how to handle frontend JS code. *But you don't always need all that stuff*. 
 
 Here's an example of what's currently possible with the `Component` class:
 ```js

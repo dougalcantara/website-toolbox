@@ -23,12 +23,11 @@ const testComponent = new Component({
       this.methods.attachEventListeners();
     },
     updated(next, prev, prop) {},
+    containerUpdated(next, prev, prop) {},
   },
   methods: {
     attachEventListeners() {
       const submitButton = this.nodes.buttons[0];
-
-      // TODO: Provide .on('click', () => {}) and other helpers
       submitButton.addEventListener('click', this.methods.handleSubmit);
     },
     handleSubmit(e) {

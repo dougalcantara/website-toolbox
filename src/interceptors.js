@@ -1,8 +1,5 @@
 function nodes(component) {
   const interceptor = {
-    get(target, key) {
-      return target[key];
-    },
     set(target, key, nextVal) {
       const prevVal = target[key];
 
@@ -27,19 +24,6 @@ function nodes(component) {
 
 function data(component) {
   const interceptor = {
-    get(target, key) {
-      const existingVal = target[key];
-
-      if (!existingVal) {
-        throw new Error(
-          `[website-toolbox]: property ${key} does not exist on ${
-            component.name || 'Component'
-          }.data`
-        );
-      }
-
-      return target[key];
-    },
     set(target, key, nextVal) {
       const prevVal = target[key];
 
@@ -68,6 +52,7 @@ function methods(component) {
       const handler = target[key];
 
       return function (...args) {
+        // inject component instance into method call as `this`
         const result = handler.apply(component, args);
 
         return result;
@@ -78,8 +63,31 @@ function methods(component) {
   return interceptor;
 }
 
+function state(container) {
+  const interceptor = {
+    set(target, key, nextVal) {
+      const prevVal = target[key];
+
+      if (!prevVal) {
+        throw new Error(
+          `[website-toolbox]: Cannot assign a value to an undeclared property (\`${key}\`) in State. Declare an initial value for \`${key}\` before assigning a new value to it.`
+        );
+      }
+
+      if (typeof container.hooks.updated === 'function') {
+        container.hooks.updated.apply(container, [nextVal, prevVal, key]);
+      }
+
+      return Reflect.set(...arguments);
+    },
+  };
+
+  return interceptor;
+}
+
 export default {
   nodes,
   data,
   methods,
+  state,
 };

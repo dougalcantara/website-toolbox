@@ -8,8 +8,6 @@ export default function Component(component) {
    */
   Object.keys(component).forEach((key) => (this[key] = component[key]));
 
-  this.store = {};
-
   if (component.root) {
     // TODO: validate
     this.root = document.querySelector(this.root);
@@ -38,10 +36,12 @@ export default function Component(component) {
     this.hooks.setup.apply(this);
   }
 
-  this._reset = () => {}; // TODO: reset to initialState
-
   return (container) => {
     this.container = container;
+
+    this._reset = () => {}; // TODO: reset to initialState
+
+    this.setState = container.setState;
 
     return this;
   };

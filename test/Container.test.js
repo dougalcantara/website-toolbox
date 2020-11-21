@@ -2,13 +2,11 @@ import testContainer from './fixtures/testContainer';
 import testComponent from './fixtures/testComponent';
 import anotherTestComponent from './fixtures/anotherTestComponent';
 
-const container = testContainer();
-
 test('Container.components', () => {
   const components = [
-    testComponent(container),
-    anotherTestComponent(container),
+    testComponent(testContainer),
+    anotherTestComponent(testContainer),
   ];
 
-  expect(container.components).toEqual(expect.arrayContaining(components));
+  expect(testContainer.components).toEqual(expect.arrayContaining(components));
 });

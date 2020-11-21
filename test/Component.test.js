@@ -1,5 +1,5 @@
-import testComponent from './fixtures/testComponent';
 import testContainer from './fixtures/testContainer';
+import testComponent from './fixtures/testComponent';
 import './fixtures/_document';
 
 const component = testComponent(testContainer);
@@ -30,7 +30,7 @@ test('Component.nodes', () => {
     );
   }
 
-  // quietly reject shapes that don't fit the restriction of '' or []
+  // quietly reject shapes that don't fit the restriction of '' or ['']
   expect(nodes.badInput).toBeNull();
 });
 
@@ -41,15 +41,6 @@ test('Component.data', () => {
   expect(data.message).toEqual('Hello world!');
   methods.updateMessage(newMessage);
   expect(data.message).toEqual(newMessage);
-
-  // accessing an undeclared var results in an error
-  try {
-    data.skunk;
-  } catch ({ message }) {
-    expect(message).toEqual(
-      '[website-toolbox]: property skunk does not exist on TestComponent.data'
-    );
-  }
 
   // prevent assignment to an undeclared data.property
   try {
@@ -64,17 +55,48 @@ test('Component.data', () => {
 test('Component.lifecycle', () => {
   const { hooks, methods, data } = component;
   const updated = jest.spyOn(hooks, 'updated');
+  const containerUpdated = jest.spyOn(hooks, 'containerUpdated');
 
   // double check current state
   expect(data.message).toEqual(newMessage);
   // mutate that state
   methods.updateMessage('Episode IV: A New Hope');
   // check that hooks.updated was called
-  expect(updated).toHaveBeenCalledTimes(1);
+  expect(updated).toHaveBeenCalled();
   // check that hooks.updated was called & was passed the updated piece of data
   expect(updated).toHaveBeenCalledWith(
     'Episode IV: A New Hope', // the next value
     'Goodbye cruel world!', // the previous value
     'message' // the data.key that was updated
   );
+});
+
+test('Component.setState', () => {
+  const { hooks, container } = component;
+  const containerUpdated = jest.spyOn(hooks, 'containerUpdated');
+  const setState = jest.spyOn(component, 'setState');
+  const cb = jest.fn();
+  const initialState = container.state;
+
+  const newMsg = {
+    message: 'From component',
+  };
+
+  setState(newMsg, cb);
+
+  expect(containerUpdated).toHaveBeenCalledWith(
+    'From component',
+    'Global Message',
+    'message'
+  );
+
+  const updatedState = {
+    ...initialState,
+    ...newMsg,
+  };
+
+  // ensure other state props weren't tampered w/ when calling setState
+  expect(container.state).toStrictEqual(updatedState);
+  // setState callback arg should be passed the new version of State
+  expect(cb).toHaveBeenCalledWith(updatedState);
 });
