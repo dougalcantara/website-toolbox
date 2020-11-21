@@ -1,4 +1,6 @@
 function nodes(component) {
+  const { name, hooks } = component;
+
   const interceptor = {
     set(target, key, nextVal) {
       const prevVal = target[key];
@@ -6,13 +8,13 @@ function nodes(component) {
       if (!prevVal && typeof prevVal !== 'string') {
         throw new Error(
           `[website-toolbox]: Nodes must be declared before they are assigned a value${
-            component.name && ` in ${component.name}.nodes`
+            name && ` in ${name}.nodes`
           }`
         );
       }
 
-      if (typeof component.hooks.updated === 'function') {
-        component.hooks.updated.apply(component, [nextVal, prevVal, key]);
+      if (typeof hooks.updated === 'function') {
+        hooks.updated.apply(component, [nextVal, prevVal, key]);
       }
 
       return Reflect.set(...arguments);
@@ -23,6 +25,8 @@ function nodes(component) {
 }
 
 function data(component) {
+  const { name, hooks } = component;
+
   const interceptor = {
     set(target, key, nextVal) {
       const prevVal = target[key];
@@ -30,13 +34,13 @@ function data(component) {
       if (!prevVal) {
         throw new Error(
           `[website-toolbox]: Cannot assign a value to an undeclared property${
-            component.name && ` in ${component.name}.data`
+            name && ` in ${name}.data`
           }`
         );
       }
 
-      if (typeof component.hooks.updated === 'function') {
-        component.hooks.updated.apply(component, [nextVal, prevVal, key]);
+      if (typeof hooks.updated === 'function') {
+        hooks.updated.apply(component, [nextVal, prevVal, key]);
       }
 
       return Reflect.set(...arguments);

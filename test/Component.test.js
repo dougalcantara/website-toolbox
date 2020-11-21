@@ -75,14 +75,14 @@ test('Component.setState', () => {
   const { hooks, container } = component;
   const containerUpdated = jest.spyOn(hooks, 'containerUpdated');
   const setState = jest.spyOn(component, 'setState');
-  const cb = jest.fn();
+  const setStateCallback = jest.fn();
   const initialState = container.state;
 
   const newMsg = {
     message: 'From component',
   };
 
-  setState(newMsg, cb);
+  setState(newMsg, setStateCallback);
 
   expect(containerUpdated).toHaveBeenCalledWith(
     'From component',
@@ -98,5 +98,5 @@ test('Component.setState', () => {
   // ensure other state props weren't tampered w/ when calling setState
   expect(container.state).toStrictEqual(updatedState);
   // setState callback arg should be passed the new version of State
-  expect(cb).toHaveBeenCalledWith(updatedState);
+  expect(setStateCallback).toHaveBeenCalledWith(updatedState);
 });
