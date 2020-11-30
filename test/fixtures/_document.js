@@ -9,4 +9,6 @@ document.body.innerHTML = /*html*/ `
     <button class="button" type="reset">Cancel</button>
   </div>
   <div class="another-test-component"></div>
+  <div class="another-test-component"></div>
+  <div class="another-test-component"></div>
 `;

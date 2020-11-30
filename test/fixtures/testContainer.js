@@ -12,6 +12,20 @@ const config = {
       baz: 'qux',
     },
   },
+  mixins: {
+    // very contrived custom hook implementation
+    countResizes() {
+      this.state.resizeCount = 0;
+
+      this.hooks.countResizes = () => {
+        this.setState({
+          resizeCount: this.state.resizeCount++,
+        });
+      };
+
+      window.addEventListener('resize', this.hooks.countResizes);
+    },
+  },
 };
 
 export default new Container(components, config);

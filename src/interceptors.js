@@ -72,12 +72,6 @@ function state(container) {
     set(target, key, nextVal) {
       const prevVal = target[key];
 
-      if (!prevVal) {
-        throw new Error(
-          `[website-toolbox]: Cannot assign a value to an undeclared property (\`${key}\`) in State. Declare an initial value for \`${key}\` before assigning a new value to it.`
-        );
-      }
-
       if (typeof container.hooks.updated === 'function') {
         container.hooks.updated.apply(container, [nextVal, prevVal, key]);
       }

@@ -1,10 +1,12 @@
 import interceptors from './interceptors';
 
 export default function Container(components = [], config = {}) {
-  this.initialState = config.state || {};
-  this.config = config;
+  const { state, mixins } = config;
 
-  this.state = new Proxy(this.initialState, interceptors.state(this));
+  this.initialState = state || {};
+  this.mixins = mixins || {};
+
+  this.state = new Proxy(state, interceptors.state(this));
   this.components = components.map((component) => component(this));
 
   this.hooks = {
@@ -16,6 +18,12 @@ export default function Container(components = [], config = {}) {
         .forEach((component) => component.hooks.containerUpdated(...arguments));
     },
   };
+
+  for (let key in this.mixins) {
+    if (typeof this.mixins[key] === 'function') {
+      this.mixins[key].apply(this);
+    }
+  }
 
   this.setState = (newState, cb) => {
     for (let key in newState) {

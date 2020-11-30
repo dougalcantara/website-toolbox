@@ -10,7 +10,7 @@ export default function Component(component) {
 
   if (component.root) {
     // TODO: validate
-    this.root = document.querySelector(this.root);
+    this.root = document.querySelectorAll(this.root);
   }
 
   const handlers = {
@@ -20,7 +20,7 @@ export default function Component(component) {
   };
 
   // TODO: dry all this up
-  if (component.nodes) {
+  if (component.nodes && typeof component.root === 'string') {
     this.nodes = new Proxy(queryNodes(this.root, this.nodes), handlers.nodes);
   }
 

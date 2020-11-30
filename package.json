@@ -1,14 +1,14 @@
 {
   "name": "website-toolbox",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "A dead-simple framework for dealing with all sorts of \"website things\".",
   "main": "build/website-toolbox.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest --verbose",
+    "test:watch": "jest --verbose --watch",
     "test:coverage": "jest --collect-coverage",
     "build": "npm run test && rollup --config"
   },

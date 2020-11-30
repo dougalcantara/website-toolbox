@@ -8,7 +8,7 @@ const newMessage = 'Goodbye cruel world!';
 test('Component.root', () => {
   const { root } = component;
 
-  expect(root.toString()).toEqual('[object HTMLDivElement]');
+  expect(root.toString()).toEqual('[object NodeList]');
 });
 
 test('Component.nodes', () => {
@@ -21,7 +21,7 @@ test('Component.nodes', () => {
   expect(nodes.elementNotInScope).toBeNull();
 
   // allow for nodes to be initialized as '', hinting that they'll be queried later
-  nodes.willBeQueriedLater = root.querySelector('p');
+  nodes.willBeQueriedLater = root[0].querySelector('p');
   try {
     nodes.nope = document.querySelector('.some-thing');
   } catch ({ message }) {

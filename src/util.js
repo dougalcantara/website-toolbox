@@ -16,7 +16,7 @@ export function queryNodes(rootEl, rawNodes) {
       return;
     }
 
-    ctx[key] = rootEl[query](selector);
+    ctx[key] = rootEl[0][query](selector);
   });
 
   return ctx;

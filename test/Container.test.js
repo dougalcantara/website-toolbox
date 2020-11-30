@@ -40,3 +40,20 @@ test('Container.hooks', () => {
   // setState callback arg should be passed the new version of State
   expect(setStateCallback).toHaveBeenCalledWith(updatedState);
 });
+
+test('Container.config.mixins', () => {
+  const { hooks, mixins } = testContainer;
+  // this sample mixin attaches its functionality via a custom Container hook
+  const countResizes = jest.spyOn(mixins, 'countResizes');
+
+  expect(mixins.countResizes).toBeDefined();
+
+  // Simulate window resize event
+  const resizeEvent = document.createEvent('Event');
+  resizeEvent.initEvent('resize', true, true);
+  window.dispatchEvent(resizeEvent);
+  window.dispatchEvent(resizeEvent);
+  window.dispatchEvent(resizeEvent);
+
+  // expect(countResizes).toHaveBeenCalled();
+});
